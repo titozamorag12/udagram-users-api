@@ -15,6 +15,7 @@ const router = express_1.Router();
 router.use('/auth', auth_router_1.AuthRouter);
 router.get('/');
 router.get('/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
+    console.log("New GET USER ID request from ID: " + req.reqId);
     const { id } = req.params;
     const item = yield User_1.User.findByPk(id);
     res.send(item);

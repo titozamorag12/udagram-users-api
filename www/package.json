@@ -1,5 +1,5 @@
 {
-  "name": "udagram-api",
+  "name": "udagram-users-api",
   "version": "2.0.0",
   "description": "",
   "main": "src/server.js",
@@ -21,6 +21,8 @@
     "aws-sdk": "^2.429.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
+    "bunyan": "^1.8.15",
+    "bunyan-middleware": "^1.0.1",
     "cors": "^2.8.5",
     "email-validator": "^2.0.4",
     "express": "^4.16.4",
