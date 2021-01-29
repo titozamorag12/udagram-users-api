@@ -37,15 +37,7 @@ const model_index_1 = require("./controllers/v0/model.index");
         }
     }));
     app.use(body_parser_1.default.json());
-    app.use(cors_1.default({
-        allowedHeaders: [
-            'Origin', 'X-Requested-With',
-            'Content-Type', 'Accept',
-            'X-Access-Token', 'Authorization',
-        ],
-        methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-        origin: config_1.config.url,
-    }));
+    app.use(cors_1.default());
     app.use('/api/v0/', index_router_1.IndexRouter);
     // Root URI call
     app.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {

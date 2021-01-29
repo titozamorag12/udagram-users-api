@@ -2,32 +2,47 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AWS = require("aws-sdk");
 const config_1 = require("./config/config");
-// Configure AWS
-const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
-AWS.config.credentials = credentials;
+const c = config_1.config;
+//Configure AWS
+if (c.aws_profile !== "DEPLOYED") {
+    var credentials = new AWS.SharedIniFileCredentials({ profile: 'user1' });
+    AWS.config.credentials = credentials;
+}
 exports.s3 = new AWS.S3({
     signatureVersion: 'v4',
-    region: config_1.config.aws_region,
-    params: { Bucket: config_1.config.aws_media_bucket },
+    region: c.aws_region,
+    params: { Bucket: c.aws_media_bucket }
 });
-// Generates an AWS signed URL for retrieving objects
+/* getGetSignedUrl generates an aws signed url to retreive an item
+ * @Params
+ *    key: string - the filename to be put into the s3 bucket
+ * @Returns:
+ *    a url as a string
+ */
 function getGetSignedUrl(key) {
     const signedUrlExpireSeconds = 60 * 5;
-    return exports.s3.getSignedUrl('getObject', {
-        Bucket: config_1.config.aws_media_bucket,
+    const url = exports.s3.getSignedUrl('getObject', {
+        Bucket: c.aws_media_bucket,
         Key: key,
-        Expires: signedUrlExpireSeconds,
+        Expires: signedUrlExpireSeconds
     });
+    return url;
 }
 exports.getGetSignedUrl = getGetSignedUrl;
-// Generates an AWS signed URL for uploading objects
+/* getPutSignedUrl generates an aws signed url to put an item
+ * @Params
+ *    key: string - the filename to be retreived from s3 bucket
+ * @Returns:
+ *    a url as a string
+ */
 function getPutSignedUrl(key) {
     const signedUrlExpireSeconds = 60 * 5;
-    return exports.s3.getSignedUrl('putObject', {
-        Bucket: config_1.config.aws_media_bucket,
+    const url = exports.s3.getSignedUrl('putObject', {
+        Bucket: c.aws_media_bucket,
         Key: key,
-        Expires: signedUrlExpireSeconds,
+        Expires: signedUrlExpireSeconds
     });
+    return url;
 }
 exports.getPutSignedUrl = getPutSignedUrl;
 //# sourceMappingURL=aws.js.map
